@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load wishlist %}
+
+<div class="container">
+    <div class = "border rounded p-4 m-4">
+        <p class="display-4 pl-4 ml-4">Your List</p>
+        <hr>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for product in products %}
+                <tr>
+                    <td scope="row"></td>
+                    <td>{{forloop.counter}}.</td>
+                    <td><img style="height: 70px;" class="rounded" src="{{product.image.url}}" alt=""></td>
+                    <td>{{product.name}}</td>
+                    <td>₹{{product.price}}</td>
+                    <td>{{product|wishlist_quantity:request.session.wishlist}}</td>
+                    <td>₹{{product|price_total:request.session.wishlist}}</td>
+                </tr>
+
+                {% endfor %}
+                
+            
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th colspan="3"></th>
+                    <th class="" colspan="">Total : </th>
+                    <th>₹{{products|total_wishlist_price:request.session.wishlist}}</th>
+                </tr>
+            </tfoot>
+
+
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
